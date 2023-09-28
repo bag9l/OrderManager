@@ -1,6 +1,7 @@
 package com.example.ordermanager.exception.handler;
 
 import com.example.ordermanager.exception.EntityNotExistsException;
+import com.example.ordermanager.exception.OutOfQuantityException;
 import com.example.ordermanager.exception.PermissionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,14 @@ public class ApiExceptionHandler {
     protected ResponseEntity<Object> handlePermissionException(
             PermissionException exception) {
         ApiError apiError = new ApiError(HttpStatus.FORBIDDEN);
+        apiError.setMessage(exception.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(OutOfQuantityException.class)
+    protected ResponseEntity<Object> handleOutOfQuantityException(
+            OutOfQuantityException exception) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage(exception.getMessage());
         return buildResponseEntity(apiError);
     }
