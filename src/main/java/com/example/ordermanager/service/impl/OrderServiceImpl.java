@@ -3,6 +3,7 @@ package com.example.ordermanager.service.impl;
 import com.example.ordermanager.dto.NewOrder;
 import com.example.ordermanager.dto.OrderDto;
 import com.example.ordermanager.exception.EntityNotExistsException;
+import com.example.ordermanager.exception.PermissionException;
 import com.example.ordermanager.mapper.OrderItemMapper;
 import com.example.ordermanager.mapper.OrderMapper;
 import com.example.ordermanager.model.Order;
@@ -54,6 +55,10 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> {
             throw new EntityNotExistsException("Order with id:" + orderId + " not found");
         });
+
+        if (order.getIsPayed()) {
+            throw new PermissionException("The order has already been paid for");
+        }
 
         order.setIsPayed(true);
 
