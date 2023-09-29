@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString()
-@Table(appliesTo = "`ordered_product`")
+@Table(appliesTo = "`order_item`")
 @Entity
 public class OrderItem {
 

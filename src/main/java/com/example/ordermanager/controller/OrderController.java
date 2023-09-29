@@ -1,6 +1,7 @@
 package com.example.ordermanager.controller;
 
 import com.example.ordermanager.dto.NewOrder;
+import com.example.ordermanager.dto.OrderDto;
 import com.example.ordermanager.model.Order;
 import com.example.ordermanager.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,21 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody NewOrder newOrder){
+    public ResponseEntity<Order> createOrder(@RequestBody NewOrder newOrder) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 orderService.createOrder(newOrder)
         );
     }
 
-    @PutMapping("pay")
-    public ResponseEntity<Order> payForOrder(@RequestParam("orderId") String id){
+    @GetMapping("{id}")
+    public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                orderService.getOrderById(id)
+        );
+    }
+
+    @PutMapping("{id}/pay")
+    public ResponseEntity<Order> payForOrder(@PathVariable("id") String id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 orderService.payForOrderById(id)
         );

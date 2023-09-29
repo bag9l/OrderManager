@@ -1,7 +1,9 @@
 package com.example.ordermanager.model.user;
 
 import com.example.ordermanager.model.Role;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.Entity;

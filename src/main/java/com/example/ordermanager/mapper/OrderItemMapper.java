@@ -1,6 +1,7 @@
 package com.example.ordermanager.mapper;
 
 import com.example.ordermanager.dto.NewOrderItem;
+import com.example.ordermanager.dto.OrderItemDto;
 import com.example.ordermanager.exception.EntityNotExistsException;
 import com.example.ordermanager.exception.OutOfQuantityException;
 import com.example.ordermanager.model.OrderItem;
@@ -9,6 +10,8 @@ import com.example.ordermanager.repository.ProductRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ProductRepository.class})
 public abstract class OrderItemMapper {
@@ -27,6 +30,15 @@ public abstract class OrderItemMapper {
         }
 
         return new OrderItem(product, quantity);
+    }
+
+    public OrderItemDto orderItemToDto(OrderItem orderItem) {
+        String id = orderItem.getProduct().getId();
+        String name = orderItem.getProduct().getName();
+        Integer quantity = orderItem.getQuantity();
+        BigDecimal price = orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(quantity));
+
+        return new OrderItemDto(id, name, price, quantity);
     }
 
     @Autowired

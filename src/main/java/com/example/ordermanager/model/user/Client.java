@@ -1,7 +1,6 @@
 package com.example.ordermanager.model.user;
 
 import com.example.ordermanager.model.Role;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

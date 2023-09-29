@@ -24,12 +24,12 @@ public class Product {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name="`name`")
+    @Column(name = "`name`")
     private String name;
 
-    @Column(name="`price`")
+    @Column(name = "`price`")
     private BigDecimal price;
 
-    @Column(name="`quantity`")
+    @Column(name = "`quantity`")
     private Integer quantity;
 }

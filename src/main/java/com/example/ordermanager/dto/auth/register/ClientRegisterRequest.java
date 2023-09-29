@@ -1,6 +1,5 @@
 package com.example.ordermanager.dto.auth.register;
 
-import com.example.ordermanager.model.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

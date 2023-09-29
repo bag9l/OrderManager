@@ -14,16 +14,16 @@ import javax.persistence.Entity;
 //@AllArgsConstructor
 @Table(appliesTo = "`admin`")
 @Entity
-public class Admin extends User{
+public class Admin extends User {
 
     public Admin(String login,
-                  String password,
-                  String fullName,
-                  String email,
-                  Boolean isExpired,
-                  Boolean isLocked,
-                  Boolean isCredentialsExpired,
-                  Boolean isEnabled) {
+                 String password,
+                 String fullName,
+                 String email,
+                 Boolean isExpired,
+                 Boolean isLocked,
+                 Boolean isCredentialsExpired,
+                 Boolean isEnabled) {
         super(login, password, fullName, email, Role.ADMIN, isExpired, isLocked, isCredentialsExpired, isEnabled);
     }
 }

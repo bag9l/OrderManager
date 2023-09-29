@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
             return client.get();
         } else if (manager.isPresent()) {
             return manager.get();
-        }else if (admin.isPresent()) {
+        } else if (admin.isPresent()) {
             return admin.get();
         } else throw new EntityNotExistsException("User with username: " + login + " not found");
     }

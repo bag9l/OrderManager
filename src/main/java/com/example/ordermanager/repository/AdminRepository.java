@@ -1,7 +1,6 @@
 package com.example.ordermanager.repository;
 
 import com.example.ordermanager.model.user.Admin;
-import com.example.ordermanager.model.user.Client;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

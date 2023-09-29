@@ -12,7 +12,7 @@ public class ScheduledTasks {
     private final OrderService orderService;
 
     @Scheduled(cron = "0 * * * * *")
-    public void deleteOldUnpaidOrdersTask(){
+    public void deleteOldUnpaidOrdersTask() {
         orderService.deleteOldUnpaidOrders();
     }
 }

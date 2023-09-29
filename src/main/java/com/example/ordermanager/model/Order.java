@@ -6,7 +6,6 @@ import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,9 +31,9 @@ public class Order {
             CascadeType.REFRESH
     })
     @ToString.Exclude
-    private Set<OrderItem> products = new HashSet<>();
+    private Set<OrderItem> productItems = new HashSet<>();
 
-    @Column(name = "created_at", columnDefinition = "TIME")
+    @Column(name = "created_at")//, columnDefinition = "TIME")
     private LocalTime createdAt;
 
     @Transient
@@ -43,8 +42,8 @@ public class Order {
     @Column(name = "`is_payed`")
     private Boolean isPayed;
 
-    public Order(Set<OrderItem> products) {
-        this.products = products;
+    public Order(Set<OrderItem> productItems) {
+        this.productItems = productItems;
         isPayed = false;
         createdAt = LocalTime.now();
     }
