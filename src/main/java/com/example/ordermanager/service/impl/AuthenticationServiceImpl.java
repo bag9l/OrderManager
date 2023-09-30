@@ -49,7 +49,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 false,
                 false,
                 false,
-                true
+                true,
+                null
         );
 
         User savedUser = clientRepository.save(user);

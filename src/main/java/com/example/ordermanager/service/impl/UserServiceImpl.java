@@ -8,26 +8,19 @@ import com.example.ordermanager.model.user.User;
 import com.example.ordermanager.repository.AdminRepository;
 import com.example.ordermanager.repository.ClientRepository;
 import com.example.ordermanager.repository.ManagerRepository;
-import com.example.ordermanager.service.AuthenticationService;
 import com.example.ordermanager.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequiredArgsConstructor()
 @Service
 public class UserServiceImpl implements UserService {
 
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
     private final AdminRepository adminRepository;
-
-    @Lazy
-    private final AuthenticationService authenticationService;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Override

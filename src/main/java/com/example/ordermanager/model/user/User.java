@@ -31,7 +31,7 @@ public abstract class User implements UserDetails {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name = "`login`")
+    @Column(name = "`login`", unique = true)
     private String login;
 
     @Column(name = "`password`")
