@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 public class AuthenticationController {
@@ -21,7 +23,7 @@ public class AuthenticationController {
 
 
     @PostMapping(path = "login")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 authenticationService.authenticate(request)
         );
@@ -29,7 +31,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/success")
-    public ResponseEntity<AuthenticatedUser> getAuthenticatedUser(@AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity<AuthenticatedUser> getAuthenticatedUser(@Valid @AuthenticationPrincipal UserDetails user) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 authenticationService.getAuthenticatedUser(user.getUsername()));
     }

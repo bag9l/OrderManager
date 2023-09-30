@@ -12,6 +12,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RequestMapping("orders")
 @RestController()
@@ -22,7 +24,7 @@ public class OrderController {
     @PreAuthorize(value = "hasAuthority('CLIENT')")
     @PostMapping
     public ResponseEntity<Order> createOrder(@AuthenticationPrincipal UserDetails userDetails,
-                                             @RequestBody NewOrder newOrder) {
+                                             @Valid @RequestBody NewOrder newOrder) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 orderService.createOrder(newOrder, userDetails.getUsername())
         );

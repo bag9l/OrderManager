@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class ProductController {
 
     @PreAuthorize(value = "hasAuthority('MANAGER')")
     @PostMapping()
-    public ResponseEntity<ProductDto> createProduct(@RequestBody NewProduct newProduct) {
+    public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody NewProduct newProduct) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 productService.createProduct(newProduct)
         );

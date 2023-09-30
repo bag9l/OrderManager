@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 public class Client extends User {
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", orphanRemoval = true)
     @JsonManagedReference
     private Set<Order> orders;
 
