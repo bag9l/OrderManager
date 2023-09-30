@@ -21,9 +21,11 @@ public abstract class OrderMapper {
                 .map(orderItemMapper::orderItemToDto)
                 .collect(Collectors.toList());
 
-        BigDecimal totalPrice = BigDecimal.valueOf(0);
+        BigDecimal totalPrice = BigDecimal.ZERO;
 
-        orderItemDtos.forEach((item) -> totalPrice.add(item.getPrice()));
+        for (OrderItemDto item : orderItemDtos) {
+            totalPrice = totalPrice.add(item.getPriceOfProduct().multiply(BigDecimal.valueOf(item.getOrderedQuantity())));
+        }
 
         return new OrderDto(orderItemDtos, totalPrice);
     }

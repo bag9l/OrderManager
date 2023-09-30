@@ -1,10 +1,13 @@
 package com.example.ordermanager.model;
 
+import com.example.ordermanager.model.user.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
@@ -33,19 +36,27 @@ public class Order {
     @ToString.Exclude
     private Set<OrderItem> productItems = new HashSet<>();
 
-    @Column(name = "created_at")//, columnDefinition = "TIME")
-    private LocalTime createdAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @ToString.Exclude
+    @JsonBackReference
+    private Client owner;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @Transient
     private Integer existsForMinutes;
 
-    @Column(name = "`is_payed`")
-    private Boolean isPayed;
+    @Column(name = "`is_paid`")
+    private Boolean isPaid;
 
-    public Order(Set<OrderItem> productItems) {
+    public Order(Set<OrderItem> productItems,
+                 Client owner) {
         this.productItems = productItems;
-        isPayed = false;
-        createdAt = LocalTime.now();
+        this.owner = owner;
+        isPaid = false;
+        createdAt = LocalDateTime.now();
     }
 
     public Integer getExistsForMinutes() {

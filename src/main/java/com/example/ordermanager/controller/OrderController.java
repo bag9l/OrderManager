@@ -7,6 +7,9 @@ import com.example.ordermanager.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -16,10 +19,12 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @PreAuthorize(value = "hasAuthority('CLIENT')")
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody NewOrder newOrder) {
+    public ResponseEntity<Order> createOrder(@AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestBody NewOrder newOrder) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                orderService.createOrder(newOrder)
+                orderService.createOrder(newOrder, userDetails.getUsername())
         );
     }
 

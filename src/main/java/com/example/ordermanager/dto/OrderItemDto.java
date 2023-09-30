@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 public class OrderItemDto {
     private final String productId;
     private final String name;
-    private final BigDecimal price;
+    private final BigDecimal priceOfProduct;
     private final Integer orderedQuantity;
 }

@@ -11,7 +11,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.util.Scanner;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ProductRepository.class})
 public abstract class OrderItemMapper {
@@ -36,7 +39,7 @@ public abstract class OrderItemMapper {
         String id = orderItem.getProduct().getId();
         String name = orderItem.getProduct().getName();
         Integer quantity = orderItem.getQuantity();
-        BigDecimal price = orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(quantity));
+        BigDecimal price = orderItem.getProduct().getPrice();
 
         return new OrderItemDto(id, name, price, quantity);
     }

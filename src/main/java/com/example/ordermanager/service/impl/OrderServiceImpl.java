@@ -8,12 +8,15 @@ import com.example.ordermanager.mapper.OrderItemMapper;
 import com.example.ordermanager.mapper.OrderMapper;
 import com.example.ordermanager.model.Order;
 import com.example.ordermanager.model.OrderItem;
+import com.example.ordermanager.model.user.Client;
+import com.example.ordermanager.repository.ClientRepository;
 import com.example.ordermanager.repository.OrderRepository;
 import com.example.ordermanager.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final ClientRepository clientRepository;
 
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
@@ -36,18 +40,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrder(NewOrder newOrder) {
+    public Order createOrder(NewOrder newOrder, String ownerLogin) {
         Set<OrderItem> orderItems = newOrder.getOrderItems().stream()
                 .map(orderItemMapper::newToOrderItem)
                 .collect(Collectors.toSet());
+        Client owner = clientRepository.findClientByLogin(ownerLogin).orElseThrow(() -> {
+            throw new EntityNotExistsException("User with login:" + ownerLogin + " not found");
+        });
 
-        return orderRepository.save(new Order(orderItems));
+        return orderRepository.save(new Order(orderItems, owner));
     }
 
+    @Transactional
     @Override
     public void deleteOldUnpaidOrders() {
-        LocalTime tenMinutesAgo = LocalTime.now().minusMinutes(10);
-        orderRepository.deleteByCreatedAtBeforeAndIsPayedIsFalse(tenMinutesAgo);
+        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
+        orderRepository.deleteByCreatedAtBeforeAndIsPaidIsFalse(tenMinutesAgo);
     }
 
     @Override
@@ -56,11 +64,11 @@ public class OrderServiceImpl implements OrderService {
             throw new EntityNotExistsException("Order with id:" + orderId + " not found");
         });
 
-        if (order.getIsPayed()) {
+        if (order.getIsPaid()) {
             throw new PermissionException("The order has already been paid for");
         }
 
-        order.setIsPayed(true);
+        order.setIsPaid(true);
 
         return orderRepository.save(order);
     }

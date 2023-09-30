@@ -7,7 +7,7 @@ import com.example.ordermanager.model.Order;
 public interface OrderService {
     OrderDto getOrderById(String id);
 
-    Order createOrder(NewOrder newOrder);
+    Order createOrder(NewOrder newOrder, String ownerId);
 
     void deleteOldUnpaidOrders();
 
